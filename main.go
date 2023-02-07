@@ -8,14 +8,14 @@ import (
 func main() {
 	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
-	done := make(chan bool)
 	stopper := false
+	done := make(chan bool)
 
 	go func() {
 		//reset:
 		i := 0
 		for {
-			if !stopper {
+			if !stopper && i < 2 {
 				time.Sleep(500 * time.Millisecond)
 				sendMessage(i)
 				i++
@@ -36,6 +36,7 @@ func main() {
 			}
 		}
 	}()
+
 	<-done
 }
 
